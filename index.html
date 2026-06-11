@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LawFish 法律科技 SaaS 原型</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主要導覽">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">LF</span>
+          <div>
+            <strong>LawFish</strong>
+            <span>Legal risk SaaS</span>
+          </div>
+        </div>
+
+        <nav class="nav-stack" aria-label="工作區">
+          <button class="nav-item active" type="button">風險總覽</button>
+          <button class="nav-item" type="button">合約分析</button>
+          <button class="nav-item" type="button">法遵任務</button>
+          <button class="nav-item" type="button">客戶檔案</button>
+        </nav>
+
+        <section class="source-box">
+          <p>比賽來源</p>
+          <strong>大專校院創新創業實戰模擬學習平臺</strong>
+          <span>114 年第一梯次成功案例，作品：Law 網之魚 — 法律科技分析，微型創業更安心。</span>
+          <a href="https://ssp.moe.gov.tw/cases/1398" target="_blank" rel="noreferrer">官方案例頁</a>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Micro business legal ops</p>
+            <h1>微型企業法務風險工作台</h1>
+          </div>
+          <div class="top-actions">
+            <label>
+              產業情境
+              <select id="industrySelect">
+                <option value="retail">電商零售</option>
+                <option value="studio">接案工作室</option>
+                <option value="food">餐飲品牌</option>
+              </select>
+            </label>
+            <button id="runAudit" type="button">重新分析</button>
+          </div>
+        </header>
+
+        <section class="metrics" aria-label="營運摘要">
+          <article>
+            <span>待處理高風險</span>
+            <strong id="metricHighRisk">0</strong>
+          </article>
+          <article>
+            <span>已分析文件</span>
+            <strong id="metricDocs">0</strong>
+          </article>
+          <article>
+            <span>七日內期限</span>
+            <strong id="metricDeadlines">0</strong>
+          </article>
+          <article>
+            <span>合規分數</span>
+            <strong id="metricScore">0</strong>
+          </article>
+        </section>
+
+        <section class="work-grid">
+          <section class="panel client-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Client queue</p>
+                <h2>客戶案件</h2>
+              </div>
+              <input id="clientSearch" type="search" placeholder="搜尋客戶、文件、產業">
+            </div>
+            <div id="clientList" class="client-list"></div>
+          </section>
+
+          <section class="panel analysis-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Document analysis</p>
+                <h2 id="selectedClientName">文件分析</h2>
+              </div>
+              <span id="riskBadge" class="risk-badge">低風險</span>
+            </div>
+
+            <div class="document-strip">
+              <div>
+                <span>目前文件</span>
+                <strong id="documentTitle">載入中</strong>
+              </div>
+              <div>
+                <span>建議處理順序</span>
+                <strong id="documentPriority">1</strong>
+              </div>
+            </div>
+
+            <div id="clauseList" class="clause-list"></div>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Compliance calendar</p>
+                  <h2>提醒任務</h2>
+                </div>
+              </div>
+              <div id="taskList" class="task-list"></div>
+              <form id="taskForm" class="task-form">
+                <input name="task" required placeholder="新增法遵提醒">
+                <button type="submit">加入</button>
+              </form>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Risk timeline</p>
+                  <h2>風險變化</h2>
+                </div>
+              </div>
+              <div id="timeline" class="timeline"></div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
