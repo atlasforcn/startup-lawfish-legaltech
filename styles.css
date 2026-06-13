@@ -43,6 +43,7 @@ button {
   display: grid;
   grid-template-columns: 284px minmax(0, 1fr);
   min-height: 100vh;
+  transition: grid-template-columns 180ms ease;
 }
 
 .sidebar {
@@ -58,6 +59,7 @@ button {
     linear-gradient(160deg, rgba(37, 122, 111, 0.32), transparent 38%),
     #1d241f;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: padding 180ms ease;
 }
 
 .brand {
@@ -93,12 +95,40 @@ button {
   text-transform: uppercase;
 }
 
+.brand-copy,
+.nav-label,
+.source-box {
+  transition: opacity 160ms ease;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 22px;
+  right: -15px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: #1d241f;
+  background: #f0c96a;
+  border: 1px solid rgba(29, 36, 31, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(13, 20, 16, 0.22);
+  font-size: 24px;
+  font-weight: 950;
+  line-height: 1;
+}
+
 .nav-stack {
   display: grid;
   gap: 8px;
 }
 
 .nav-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   min-height: 44px;
   padding: 0 12px;
   color: #dfe8df;
@@ -107,6 +137,19 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   font-weight: 850;
+}
+
+.nav-icon {
+  display: grid;
+  flex: 0 0 26px;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: #1d241f;
+  background: rgba(240, 201, 106, 0.9);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 950;
 }
 
 .nav-item.active,
@@ -152,6 +195,42 @@ button {
 .workspace {
   min-width: 0;
   padding: 22px;
+}
+
+body.nav-collapsed .app-shell {
+  grid-template-columns: 82px minmax(0, 1fr);
+}
+
+body.nav-collapsed .sidebar {
+  gap: 16px;
+  padding: 16px 12px;
+}
+
+body.nav-collapsed .brand {
+  justify-content: center;
+}
+
+body.nav-collapsed .brand-copy,
+body.nav-collapsed .nav-label,
+body.nav-collapsed .source-box {
+  display: none;
+}
+
+body.nav-collapsed .brand-mark {
+  width: 48px;
+  height: 48px;
+}
+
+body.nav-collapsed .nav-item {
+  justify-content: center;
+  min-height: 50px;
+  padding: 0;
+}
+
+body.nav-collapsed .nav-icon {
+  flex-basis: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .topbar,
@@ -373,6 +452,36 @@ input {
   font-weight: 850;
 }
 
+.client-score-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.client-card .client-score-line small {
+  margin-top: 0;
+}
+
+.score-pill,
+.score-impact {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.score-pill {
+  color: #173d29;
+  background: rgba(47, 125, 77, 0.13);
+  border: 1px solid rgba(47, 125, 77, 0.22);
+}
+
 .case-meta {
   margin-bottom: 8px;
 }
@@ -447,6 +556,35 @@ input {
   line-height: 1.35;
 }
 
+.case-score-card strong {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.case-score-card small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.score-meter {
+  display: block;
+  height: 8px;
+  margin-top: 12px;
+  overflow: hidden;
+  background: #e2e7dc;
+  border-radius: 99px;
+}
+
+.score-meter span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--mustard) 48%, var(--green));
+  border-radius: inherit;
+}
+
 .clause-card,
 .task-item,
 .timeline-item {
@@ -474,6 +612,25 @@ input {
   gap: 8px;
   align-items: center;
   justify-content: space-between;
+}
+
+.clause-title-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.score-impact.score-negative {
+  color: #6b241d;
+  background: rgba(166, 65, 53, 0.1);
+  border: 1px solid rgba(166, 65, 53, 0.22);
+}
+
+.score-impact.score-positive {
+  color: #173d29;
+  background: rgba(47, 125, 77, 0.12);
+  border: 1px solid rgba(47, 125, 77, 0.24);
 }
 
 .clause-card p,
@@ -663,9 +820,17 @@ input {
     grid-template-columns: 1fr;
   }
 
+  body.nav-collapsed .app-shell {
+    grid-template-columns: 1fr;
+  }
+
   .sidebar {
     position: static;
     height: auto;
+  }
+
+  .sidebar-toggle {
+    right: 14px;
   }
 
   .work-grid {

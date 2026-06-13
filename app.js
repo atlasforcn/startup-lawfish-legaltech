@@ -369,6 +369,8 @@ const runAudit = document.querySelector("#runAudit");
 const taskForm = document.querySelector("#taskForm");
 const sourceHighlightsEl = document.querySelector("#sourceHighlights");
 const resolutionLog = document.querySelector("#resolutionLog");
+const sidebarToggle = document.querySelector("#sidebarToggle");
+const sidebarStorageKey = "lawfish.sidebarCollapsed";
 
 function escapeHtml(value) {
   return String(value)
@@ -415,6 +417,21 @@ function handledCount(client) {
 
 function clientScore(client) {
   return Math.min(98, client.baseScore + handledCount(client) * 5 + auditRuns);
+}
+
+function scoreDelta(client) {
+  return clientScore(client) - client.baseScore;
+}
+
+function clausePenalty(level) {
+  if (level === "high") return 12;
+  if (level === "mid") return 6;
+  return 2;
+}
+
+function clauseScoreImpact(clause) {
+  if (clause.handled) return { text: "+5 已回補", className: "score-positive" };
+  return { text: `-${clausePenalty(clause.level)} 扣分`, className: "score-negative" };
 }
 
 function clientWeight(client) {
@@ -482,7 +499,10 @@ function renderClients() {
           <span class="case-meta">${escapeHtml(moduleNames[client.module])} / ${escapeHtml(client.stage)}</span>
           <strong>${escapeHtml(client.name)}</strong>
           <span>${escapeHtml(client.owner)} / ${escapeHtml(client.document)}</span>
-          <small>${riskText(risk)}，合規 ${clientScore(client)} 分，${done}/${total} 已處理</small>
+          <span class="client-score-line">
+            <span class="score-pill">${clientScore(client)} 分</span>
+            <small>${riskText(risk)}，${done}/${total} 已處理</small>
+          </span>
           <span class="mini-meter" aria-hidden="true"><span style="width: ${progress}%"></span></span>
         </button>
       `;
@@ -522,6 +542,9 @@ function renderAnalysis() {
   document.querySelector("#documentTitle").textContent = client.document;
   document.querySelector("#documentPriority").textContent = `第 ${rank} 件`;
   document.querySelector("#documentContext").textContent = client.sourceHint;
+  document.querySelector("#selectedClientScore").textContent = `${clientScore(client)} 分`;
+  document.querySelector("#selectedScoreDelta").textContent = `初始 ${client.baseScore}，目前 ${scoreDelta(client) >= 0 ? "+" : ""}${scoreDelta(client)}，已處理 ${handledCount(client)}/${client.clauses.length}`;
+  document.querySelector("#selectedScoreMeter").style.width = `${clientScore(client)}%`;
 
   const badge = document.querySelector("#riskBadge");
   badge.textContent = riskText(risk);
@@ -530,6 +553,7 @@ function renderAnalysis() {
   clauseList.innerHTML = client.clauses.map((clause, index) => {
     const effectiveRisk = clause.handled ? "resolved" : clause.level;
     const status = clause.handled ? "已處理" : clause.status;
+    const impact = clauseScoreImpact(clause);
     const resolvedNote = clause.handled
       ? `<div class="handled-note"><span>處理結果</span><strong>${escapeHtml(clause.resolution)}</strong><small>${escapeHtml(clause.resolvedAt)} 更新，已新增右側追蹤任務。</small></div>`
       : "";
@@ -539,7 +563,10 @@ function renderAnalysis() {
         <div>
           <div class="clause-title-row">
             <h3>${escapeHtml(clause.title)}</h3>
-            <span class="clause-status ${riskClass(effectiveRisk)}">${escapeHtml(status)}</span>
+            <div class="clause-title-meta">
+              <span class="score-impact ${impact.className}">${escapeHtml(impact.text)}</span>
+              <span class="clause-status ${riskClass(effectiveRisk)}">${escapeHtml(status)}</span>
+            </div>
           </div>
           <p>${escapeHtml(clause.note)}</p>
           <div class="clause-detail">
@@ -668,6 +695,27 @@ function render() {
   renderTasks();
 }
 
+function setSidebarCollapsed(collapsed) {
+  document.body.classList.toggle("nav-collapsed", collapsed);
+  sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
+  sidebarToggle.setAttribute("aria-label", collapsed ? "展開側邊導覽" : "收合側邊導覽");
+  sidebarToggle.setAttribute("title", collapsed ? "展開側邊導覽" : "收合側邊導覽");
+  sidebarToggle.querySelector("span").textContent = collapsed ? "›" : "‹";
+  try {
+    localStorage.setItem(sidebarStorageKey, collapsed ? "1" : "0");
+  } catch (error) {
+    // Ignore storage errors; the toggle still works for the current session.
+  }
+}
+
+function restoreSidebarState() {
+  try {
+    setSidebarCollapsed(localStorage.getItem(sidebarStorageKey) === "1");
+  } catch (error) {
+    setSidebarCollapsed(false);
+  }
+}
+
 search.addEventListener("input", render);
 industrySelect.addEventListener("change", render);
 
@@ -707,4 +755,9 @@ taskForm.addEventListener("submit", (event) => {
   render();
 });
 
+sidebarToggle.addEventListener("click", () => {
+  setSidebarCollapsed(!document.body.classList.contains("nav-collapsed"));
+});
+
+restoreSidebarState();
 render();

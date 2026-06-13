@@ -11,17 +11,32 @@
       <aside class="sidebar" aria-label="主要導覽">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true">LF</span>
-          <div>
+          <div class="brand-copy">
             <strong>LawFish</strong>
             <span>Legal risk SaaS</span>
           </div>
         </div>
+        <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="true" aria-label="收合側邊導覽" title="收合側邊導覽">
+          <span aria-hidden="true">‹</span>
+        </button>
 
         <nav class="nav-stack" aria-label="工作區">
-          <button class="nav-item active" type="button">風險總覽</button>
-          <button class="nav-item" type="button">合約分析</button>
-          <button class="nav-item" type="button">法遵任務</button>
-          <button class="nav-item" type="button">客戶檔案</button>
+          <button class="nav-item active" type="button" title="風險總覽">
+            <span class="nav-icon" aria-hidden="true">總</span>
+            <span class="nav-label">風險總覽</span>
+          </button>
+          <button class="nav-item" type="button" title="合約分析">
+            <span class="nav-icon" aria-hidden="true">約</span>
+            <span class="nav-label">合約分析</span>
+          </button>
+          <button class="nav-item" type="button" title="法遵任務">
+            <span class="nav-icon" aria-hidden="true">任</span>
+            <span class="nav-label">法遵任務</span>
+          </button>
+          <button class="nav-item" type="button" title="客戶檔案">
+            <span class="nav-icon" aria-hidden="true">客</span>
+            <span class="nav-label">客戶檔案</span>
+          </button>
         </nav>
 
         <section class="source-box">
@@ -104,6 +119,12 @@
               <div>
                 <span>建議處理順序</span>
                 <strong id="documentPriority">1</strong>
+              </div>
+              <div class="case-score-card">
+                <span>本案合規分</span>
+                <strong id="selectedClientScore">0</strong>
+                <small id="selectedScoreDelta">尚未處理風險</small>
+                <span class="score-meter" aria-hidden="true"><span id="selectedScoreMeter"></span></span>
               </div>
               <div>
                 <span>官方脈絡</span>
