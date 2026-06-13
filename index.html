@@ -27,7 +27,7 @@
         <section class="source-box">
           <p>比賽來源</p>
           <strong>大專校院創新創業實戰模擬學習平臺</strong>
-          <span>114 年第一梯次成功案例，作品：Law 網之魚 — 法律科技分析，微型創業更安心。</span>
+          <span>114 年第一梯次成功案例，國立政治大學作品：Law 網之魚。官方案例聚焦商標、專利、法務資訊、契約解讀與訴願類案建議。</span>
           <a href="https://ssp.moe.gov.tw/cases/1398" target="_blank" rel="noreferrer">官方案例頁</a>
         </section>
       </aside>
@@ -40,11 +40,14 @@
           </div>
           <div class="top-actions">
             <label>
-              產業情境
+              服務模組
               <select id="industrySelect">
-                <option value="retail">電商零售</option>
-                <option value="studio">接案工作室</option>
-                <option value="food">餐飲品牌</option>
+                <option value="all">全部案例</option>
+                <option value="trademark">商標風險</option>
+                <option value="patent">專利比對</option>
+                <option value="contract">契約解讀</option>
+                <option value="legal">法規諮詢</option>
+                <option value="appeal">訴願類案</option>
               </select>
             </label>
             <button id="runAudit" type="button">重新分析</button>
@@ -53,22 +56,24 @@
 
         <section class="metrics" aria-label="營運摘要">
           <article>
-            <span>待處理高風險</span>
+            <span>未處理高風險</span>
             <strong id="metricHighRisk">0</strong>
           </article>
           <article>
-            <span>已分析文件</span>
+            <span>案例文件</span>
             <strong id="metricDocs">0</strong>
           </article>
           <article>
-            <span>七日內期限</span>
+            <span>追蹤任務</span>
             <strong id="metricDeadlines">0</strong>
           </article>
           <article>
-            <span>合規分數</span>
+            <span>平均合規分</span>
             <strong id="metricScore">0</strong>
           </article>
         </section>
+
+        <section id="sourceHighlights" class="source-highlights" aria-label="官方案例重點"></section>
 
         <section class="work-grid">
           <section class="panel client-panel">
@@ -77,7 +82,7 @@
                 <p class="eyebrow">Client queue</p>
                 <h2>客戶案件</h2>
               </div>
-              <input id="clientSearch" type="search" placeholder="搜尋客戶、文件、產業">
+              <input id="clientSearch" type="search" placeholder="搜尋客戶、文件、風險">
             </div>
             <div id="clientList" class="client-list"></div>
           </section>
@@ -100,9 +105,14 @@
                 <span>建議處理順序</span>
                 <strong id="documentPriority">1</strong>
               </div>
+              <div>
+                <span>官方脈絡</span>
+                <strong id="documentContext">載入中</strong>
+              </div>
             </div>
 
             <div id="clauseList" class="clause-list"></div>
+            <div id="resolutionLog" class="resolution-log"></div>
           </section>
 
           <aside class="right-column">
