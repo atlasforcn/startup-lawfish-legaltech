@@ -12,6 +12,7 @@
   --green: #2f7d4d;
   --blue: #315f91;
   --shadow: 0 20px 60px rgba(47, 58, 45, 0.12);
+  --sidebar-width: 284px;
 }
 
 * {
@@ -41,14 +42,14 @@ button {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 284px minmax(0, 1fr);
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   min-height: 100vh;
-  transition: grid-template-columns 180ms ease;
 }
 
 .sidebar {
   position: sticky;
   top: 0;
+  min-width: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -198,10 +199,12 @@ button {
 }
 
 body.nav-collapsed .app-shell {
-  grid-template-columns: 82px minmax(0, 1fr);
+  --sidebar-width: 82px;
 }
 
 body.nav-collapsed .sidebar {
+  width: 82px;
+  min-width: 0;
   gap: 16px;
   padding: 16px 12px;
 }
