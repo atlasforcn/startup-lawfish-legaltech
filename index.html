@@ -6,7 +6,7 @@
     <title>LawFish 法律科技 SaaS 原型</title>
     <link rel="stylesheet" href="styles.css?v=20260613-navscore">
   </head>
-  <body>
+  <body class="nav-collapsed">
     <div class="app-shell">
       <aside class="sidebar" aria-label="主要導覽">
         <div class="brand">
@@ -16,24 +16,24 @@
             <span>Legal risk SaaS</span>
           </div>
         </div>
-        <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="true" aria-label="收合側邊導覽" title="收合側邊導覽">
-          <span aria-hidden="true">‹</span>
+        <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="false" aria-label="展開側邊導覽" title="展開側邊導覽">
+          <span aria-hidden="true">›</span>
         </button>
 
         <nav class="nav-stack" aria-label="工作區">
-          <button class="nav-item active" type="button" title="風險總覽">
+          <button class="nav-item active" type="button" title="風險總覽" data-target="#overview">
             <span class="nav-icon" aria-hidden="true">總</span>
             <span class="nav-label">風險總覽</span>
           </button>
-          <button class="nav-item" type="button" title="合約分析">
+          <button class="nav-item" type="button" title="合約分析" data-target="#analysis">
             <span class="nav-icon" aria-hidden="true">約</span>
             <span class="nav-label">合約分析</span>
           </button>
-          <button class="nav-item" type="button" title="法遵任務">
+          <button class="nav-item" type="button" title="法遵任務" data-target="#tasks">
             <span class="nav-icon" aria-hidden="true">任</span>
             <span class="nav-label">法遵任務</span>
           </button>
-          <button class="nav-item" type="button" title="客戶檔案">
+          <button class="nav-item" type="button" title="客戶檔案" data-target="#clients">
             <span class="nav-icon" aria-hidden="true">客</span>
             <span class="nav-label">客戶檔案</span>
           </button>
@@ -69,7 +69,12 @@
           </div>
         </header>
 
-        <section class="metrics" aria-label="營運摘要">
+        <div class="demo-boundary" role="note">
+          <strong>Prototype</strong>
+          <span>此頁是靜態法律科技原型；案例、條款分數與建議文字皆為示範，不構成法律意見，也不代表原團隊官方產品。</span>
+        </div>
+
+        <section class="metrics" id="overview" aria-label="營運摘要">
           <article>
             <span>未處理高風險</span>
             <strong id="metricHighRisk">0</strong>
@@ -88,10 +93,16 @@
           </article>
         </section>
 
-        <section id="sourceHighlights" class="source-highlights" aria-label="官方案例重點"></section>
+        <details class="source-highlights-wrap" aria-labelledby="source-highlights-title">
+          <summary>
+            <span class="eyebrow">官方案例重點</span>
+            <strong id="source-highlights-title">Law 網之魚功能對照</strong>
+          </summary>
+          <section id="sourceHighlights" class="source-highlights" aria-label="官方案例重點"></section>
+        </details>
 
         <section class="work-grid">
-          <section class="panel client-panel">
+          <section class="panel client-panel" id="clients">
             <div class="panel-head">
               <div>
                 <p class="eyebrow">Client queue</p>
@@ -102,7 +113,7 @@
             <div id="clientList" class="client-list"></div>
           </section>
 
-          <section class="panel analysis-panel">
+          <section class="panel analysis-panel" id="analysis">
             <div class="panel-head">
               <div>
                 <p class="eyebrow">Document analysis</p>
@@ -137,7 +148,7 @@
           </section>
 
           <aside class="right-column">
-            <section class="panel">
+            <section class="panel" id="tasks">
               <div class="panel-head">
                 <div>
                   <p class="eyebrow">Compliance calendar</p>

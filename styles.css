@@ -251,7 +251,7 @@ body.nav-collapsed .nav-icon {
   gap: 18px;
   align-items: end;
   padding: 20px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 h1,
@@ -275,9 +275,30 @@ button {
 h1 {
   margin-top: 6px;
   font-family: Georgia, "Noto Serif TC", serif;
-  font-size: clamp(30px, 4vw, 54px);
-  line-height: 1.05;
+  font-size: 38px;
+  line-height: 1.12;
   letter-spacing: 0;
+}
+
+.demo-boundary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  color: #566158;
+  background: rgba(251, 252, 248, 0.78);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.demo-boundary strong {
+  color: var(--copper);
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 h2 {
@@ -332,7 +353,7 @@ input {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .metrics article {
@@ -353,11 +374,58 @@ input {
   line-height: 1;
 }
 
+.source-highlights-wrap {
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: rgba(251, 252, 248, 0.78);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.source-highlights-wrap summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.source-highlights-wrap summary::-webkit-details-marker {
+  display: none;
+}
+
+.source-highlights-wrap summary::after {
+  content: "展開";
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 5px 9px;
+  color: var(--forest);
+  background: rgba(45, 88, 59, 0.1);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.source-highlights-wrap[open] summary::after {
+  content: "收合";
+}
+
+.source-highlights-wrap:not([open]) > :not(summary) {
+  display: none;
+}
+
+.source-highlights-wrap summary strong {
+  min-width: 0;
+  line-height: 1.35;
+}
+
 .source-highlights {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin-bottom: 14px;
+  padding: 0 14px 14px;
 }
 
 .source-highlights article {
@@ -405,7 +473,7 @@ input {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .panel-head input {
@@ -829,7 +897,12 @@ input {
 
   .sidebar {
     position: static;
+    width: auto;
     height: auto;
+  }
+
+  body.nav-collapsed .sidebar {
+    width: auto;
   }
 
   .sidebar-toggle {
@@ -867,5 +940,9 @@ input {
 
   .panel-head input {
     width: 100%;
+  }
+
+  h1 {
+    font-size: 30px;
   }
 }

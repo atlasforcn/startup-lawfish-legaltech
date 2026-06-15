@@ -710,9 +710,10 @@ function setSidebarCollapsed(collapsed) {
 
 function restoreSidebarState() {
   try {
-    setSidebarCollapsed(localStorage.getItem(sidebarStorageKey) === "1");
+    const stored = localStorage.getItem(sidebarStorageKey);
+    setSidebarCollapsed(stored === null ? true : stored === "1");
   } catch (error) {
-    setSidebarCollapsed(false);
+    setSidebarCollapsed(true);
   }
 }
 
@@ -757,6 +758,15 @@ taskForm.addEventListener("submit", (event) => {
 
 sidebarToggle.addEventListener("click", () => {
   setSidebarCollapsed(!document.body.classList.contains("nav-collapsed"));
+});
+
+document.querySelectorAll(".nav-item[data-target]").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.classList.toggle("active", item === button);
+    });
+    document.querySelector(button.dataset.target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
 restoreSidebarState();
